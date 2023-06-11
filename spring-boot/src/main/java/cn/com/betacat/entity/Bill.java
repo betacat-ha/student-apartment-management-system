@@ -7,16 +7,13 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class User {
+public class Bill {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Integer roleId;
-    private String name;
-    private String nickname;
-    private String password;
-    private String phone;
-    private String email;
-    private LocalDateTime createTime;
-    private LocalDateTime lastLoginTime;
+    private Integer usageId;
+    private Double amount;
     private String status;
+    private LocalDateTime date;
+    private LocalDateTime payDate;
+    private String payType;
 }

@@ -14,7 +14,7 @@ public class TestUserController {
     private UserMapper userMapper;
 
     @Test
-    public void testGetUser() {
+    public void testGetUserList() {
         List<User> userList = userMapper.selectList(null);
         for (User user : userList) {
             System.out.println("user = " + user);
