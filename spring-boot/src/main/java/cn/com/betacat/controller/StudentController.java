@@ -42,5 +42,4 @@ public class StudentController {
         IPage<Student> iPage = studentMapper.selectPage(page,null);
         return new Result(200, "OK", iPage);
     }
-
 }

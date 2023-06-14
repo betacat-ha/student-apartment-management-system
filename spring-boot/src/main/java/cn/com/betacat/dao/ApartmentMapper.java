@@ -18,4 +18,7 @@ public interface ApartmentMapper extends BaseMapper<Apartment> {
                     many = @Many(select = "cn.com.betacat.dao.StudentMapper.selectByApartmentId"))
     })
     List<Apartment> selectAllApartmentsAndStudents();
+
+    @Select("select * from apartment where building_id = #{buildingId}")
+    List<Apartment> selectByBuildingId(Integer buildingId);
 }
