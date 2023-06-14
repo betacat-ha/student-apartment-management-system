@@ -12,7 +12,7 @@ public class Student {
     private String className;
     private String name;
     private Integer age;
-    private String sex;
+    private String gender;
     private String phone;
     private String email;
     private String status;
