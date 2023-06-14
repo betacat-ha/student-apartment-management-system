@@ -66,6 +66,28 @@ public class StudentController {
         return new Result(200, "OK", iPage);
     }
 
+    @PostMapping("/api/student")
+    public Result update(@RequestBody Student student) {
+        if (student.getId() == null || student.getId().isEmpty() ||
+                student.getName() == null || student.getName().isEmpty() ||
+                student.getGender() == null ||
+                !(student.getGender().equals("男") || student.getGender().equals("女"))) {
+            return new Result(400, "服务器开小差了，请刷新后重试", null);
+        }
+
+        QueryWrapper<Student> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", student.getId());
+
+        List<Student> list = studentMapper.selectList(wrapper);
+        if (list.size() != 0) {
+            studentMapper.update(student, wrapper);
+            return new Result(200, "更新学生数据成功", null);
+        }
+
+        studentMapper.insert(student);
+        return new Result(200, "添加学生数据成功", null);
+    }
+
     @DeleteMapping("/api/student")
     public  Result deleteById(String id){
         int i = studentMapper.deleteById(id);
