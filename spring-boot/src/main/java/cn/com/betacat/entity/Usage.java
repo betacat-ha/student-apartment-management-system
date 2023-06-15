@@ -16,6 +16,8 @@ public class Usage {
     private Integer id;
     private Integer apartmentId;
     @TableField(exist = false)
+    private Integer buildingId;
+    @TableField(exist = false)
     private String apartmentName;
     @TableField(exist = false)
     private String buildingName;

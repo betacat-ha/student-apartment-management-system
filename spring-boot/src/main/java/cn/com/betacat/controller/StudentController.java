@@ -38,23 +38,18 @@ public class StudentController {
     @GetMapping("/api/student/search")
     public Result queryBy(@RequestParam String content, @RequestParam String type, @RequestParam String gender) {
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
-        int queryConditionAmount = 2;
         switch (type) {
             case "1": wrapper.like("id", content); break;
             case "2": wrapper.like("name", content); break;
             case "3": wrapper.like("class_name", content); break;
-            default: queryConditionAmount--;
         }
 
         switch (gender) {
             case "1": wrapper.eq("gender", "男"); break;
             case "2": wrapper.eq("gender", "女"); break;
-            default: queryConditionAmount--;
         }
 
-        List<Student> list = studentMapper.selectList(
-                queryConditionAmount == 0 ? null : wrapper
-        );
+        List<Student> list = studentMapper.selectList(wrapper);
 
         return new Result(200, "OK", list);
     }
