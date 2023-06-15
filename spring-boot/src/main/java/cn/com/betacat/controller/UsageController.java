@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 @CrossOrigin
@@ -97,6 +96,10 @@ public class UsageController {
             return new Result(400, "数据填写不完整", null);
         }
 
+        // 日期格式转换
+        usage.setStartTime(LocalDateTimeFormat(usage.getStartTimeFormat()));
+        usage.setEndTime(LocalDateTimeFormat(usage.getEndTimeFormat()));
+
         if (usage.getId() == null || usage.getId().equals(0)) {
             return usageMapper.insert(usage) == 1 ?
                     new Result(200, "数据添加成功", null) :
@@ -106,11 +109,22 @@ public class UsageController {
         QueryWrapper<Usage> wrapper = new QueryWrapper<>();
         wrapper.eq("id", usage.getId());
 
-        usage.setStartTime(LocalDateTimeFormat(usage.getStartTimeFormat()));
-        usage.setEndTime(LocalDateTimeFormat(usage.getEndTimeFormat()));
-
         return usageMapper.update(usage, wrapper) == 1 ?
                 new Result(200, "数据修改成功", null) :
+                new Result(500, "系统内部错误", null);
+    }
+
+    @DeleteMapping("/api/usage")
+    public Result delete(Integer id) {
+        if (id == null || id.equals(0)) {
+            return new Result(400, "请刷新页面后再试！", null);
+        }
+
+        QueryWrapper<Usage> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id);
+
+        return usageMapper.delete(wrapper) >= 1 ?
+                new Result(200, "数据删除成功", null) :
                 new Result(500, "系统内部错误", null);
     }
 }
