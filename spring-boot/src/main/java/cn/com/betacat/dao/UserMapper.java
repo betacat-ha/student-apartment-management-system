@@ -13,4 +13,9 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Select("select * from user where email = #{email}")
     User selectByEmail(String email);
+
+    @Select("select id, name, nickname, password, phone, email, role_id, create_time, last_login_time, status " +
+            "from user " +
+            "where email=#{email} and password =#{password}")
+    User getByEmailAndPassword(User user);
 }
