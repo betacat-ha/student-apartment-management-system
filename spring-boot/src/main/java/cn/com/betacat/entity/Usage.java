@@ -20,6 +20,8 @@ public class Usage {
     @TableField(exist = false)
     private String apartmentName;
     @TableField(exist = false)
+    private Apartment apartment;
+    @TableField(exist = false)
     private String buildingName;
     private String type;
     private Double amount;
@@ -29,4 +31,6 @@ public class Usage {
     private String startTimeFormat;
     @TableField(exist = false)
     private String endTimeFormat;
+    @TableField(exist = false)
+    private Bill bill;
 }

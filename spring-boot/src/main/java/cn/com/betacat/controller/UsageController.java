@@ -3,6 +3,7 @@ package cn.com.betacat.controller;
 import cn.com.betacat.dao.BuildingMapper;
 import cn.com.betacat.dao.UsageMapper;
 import cn.com.betacat.entity.*;
+import cn.com.betacat.services.BillService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,9 @@ public class UsageController {
 
     @Autowired
     private BuildingMapper buildingMapper;
+
+    @Autowired
+    private BillService billService;
 
     public List<Usage> outputFormat(List<Usage> list) {
         List<Building> buildingList = buildingMapper.selectAllBuildingsAndApartments();
@@ -62,6 +66,7 @@ public class UsageController {
     public Result query() {
         List<Usage> list = usageMapper.selectList(null);
         list = outputFormat(list);
+        list = billService.fillBill(list);
         return new Result(200, "OK", list);
     }
 
@@ -81,6 +86,9 @@ public class UsageController {
         }
         List<Usage> list = usageMapper.selectList(wrapper);
         list = outputFormat(list);
+
+        list = billService.fillBill(list);
+
         return new Result(200, "OK", list);
     }
 

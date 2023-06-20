@@ -23,4 +23,15 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer) JwtUtils.parseJWT(token).get("id");
         return userMapper.selectById(id);
     }
+
+    @Override
+    public Boolean updateBuildingAdminBy(Integer id, Integer buildingId) {
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            return false;
+        }
+        user.setBuildingId(buildingId);
+        userMapper.updateById(user);
+        return true;
+    }
 }

@@ -48,8 +48,16 @@ public class Result {
         return new Result(200, "success", null);
     }
 
+    public static Result success(String msg, Object data) {
+        return new Result(200, msg, null);
+    }
+
     public static Result error(String msg) {
         return new Result(500, msg, null);
+    }
+
+    public static Result reject(String msg) {
+        return new Result(403, msg, null);
     }
 
     public static Result error(Integer code, String msg) {

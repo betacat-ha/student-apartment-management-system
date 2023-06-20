@@ -3,6 +3,7 @@ package cn.com.betacat.controller;
 import cn.com.betacat.dao.UserMapper;
 import cn.com.betacat.entity.Result;
 import cn.com.betacat.entity.User;
+import cn.com.betacat.services.PermissionService;
 import cn.com.betacat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PermissionService permissionService;
+
     @GetMapping("/api/user/current")
     public Result queryCurrent(@RequestHeader String token) {
         User user = userService.getUserInfoBy(token);
@@ -29,13 +33,21 @@ public class UserController {
     }
 
     @GetMapping("/api/user")
-    public Result query() {
+    public Result query(@RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "USER_QUERY")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         List<User> list = userMapper.selectList(null);
         return new Result(200, "ok", list);
     }
 
     @PostMapping("/api/user")
-    public Result save(User user) {
+    public Result save(User user, @RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "USER_UPDATE")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         int i = userMapper.insert(user);
         if (i > 0) {
             return new Result(200, "ok", user);
@@ -44,22 +56,17 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/api/login")
-//    public Result login(User user) {
-//        User user1 = userMapper.selectByEmail(user.getEmail());
-//        if (user1 != null && user1.getPassword().equals(user.getPassword())) {
-//            return new Result(200, "OK", user1);
-//        }
-//        return new Result(401, "用户名或密码错误", null);
-//    }
-
     @DeleteMapping("/api/user")
-    public Result delete(Integer id) {
+    public Result delete(Integer id, @RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "USER_UPDATE")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         int i = userMapper.deleteById(id);
         if (i > 0) {
-            return new Result(200, "ok", null);
+            return Result.success(null);
         } else {
-            return new Result(200, "查询失败", null);
+            return Result.error(404, "删除失败");
         }
     }
 }

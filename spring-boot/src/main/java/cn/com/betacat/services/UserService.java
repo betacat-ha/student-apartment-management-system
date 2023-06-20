@@ -15,4 +15,12 @@ public interface UserService {
      * @param token 用户token
      */
     User getUserInfoBy(String token);
+
+    /**
+     * 更新用户管理的楼栋
+     * @param id 用户id
+     * @param buildingId 楼栋id
+     * @return 是否更新成功
+     */
+    Boolean updateBuildingAdminBy(Integer id, Integer buildingId);
 }

@@ -5,6 +5,7 @@ import cn.com.betacat.dao.StudentMapper;
 import cn.com.betacat.entity.Apartment;
 import cn.com.betacat.entity.Result;
 import cn.com.betacat.entity.Student;
+import cn.com.betacat.services.PermissionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,8 +21,11 @@ public class StudentController {
     @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
+    private PermissionService permissionService;
+
     @GetMapping("/api/student/{id}")
-    public Result query(@PathVariable String id) {
+    public Result query(@PathVariable String id, @RequestHeader String token) {
         Student student = studentMapper.selectStudentAndApartmentById(id);
         return new Result(200, "OK", student);
     }
@@ -30,7 +34,10 @@ public class StudentController {
      * 查询所有学生信息
      */
     @GetMapping("/api/student")
-    public Result query() {
+    public Result queryAll(@RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "STUDENT_QUERY")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
         List<Student> list = studentMapper.selectList(null);
         return new Result(200, "OK", list);
     }

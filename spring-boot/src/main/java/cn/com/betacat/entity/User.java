@@ -22,6 +22,7 @@ public class User {
     private LocalDateTime createTime;
     private LocalDateTime lastLoginTime;
     private String status;
+    private Integer buildingId;
 
 //    /**
 //     * 权限列表 */

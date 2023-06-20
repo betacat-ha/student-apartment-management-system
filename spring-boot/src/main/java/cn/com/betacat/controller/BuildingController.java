@@ -6,6 +6,8 @@ import cn.com.betacat.entity.Apartment;
 import cn.com.betacat.entity.Building;
 import cn.com.betacat.entity.Result;
 import cn.com.betacat.entity.Usage;
+import cn.com.betacat.services.PermissionService;
+import cn.com.betacat.services.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +24,28 @@ public class BuildingController {
     @Autowired
     private ApartmentMapper apartmentMapper;
 
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/api/building")
-    public Result query() {
+    public Result query(@RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "BUILDING_QUERY")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         List<Building> list = buildingMapper.selectAllBuildingsAndApartments();
         return new Result(200, "OK", list);
     }
 
     @PostMapping("/api/building")
-    public Result update(@RequestBody Building building) {
+    public Result update(@RequestBody Building building, @RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "BUILDING_UPDATE")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         //buildingMapper.insert(building);
         boolean haveError = false;
 
@@ -81,13 +96,22 @@ public class BuildingController {
             }
         }
 
+        // 更新管理员
+        for (Integer id : building.getAdministratorId()) {
+            userService.updateBuildingAdminBy(id, building.getId());
+        }
+
         return haveError ?
                 new Result(400, "部分数据未保存，请仔细检查！", null) :
                 new Result(200, "OK", null);
     }
 
     @DeleteMapping("/api/building")
-    public Result delete(Integer id) {
+    public Result delete(Integer id, @RequestHeader String token) {
+        if (!permissionService.checkPermission(token, "BUILDING_UPDATE")) {
+            return Result.reject("你没有访问该资源的权限！");
+        }
+
         buildingMapper.deleteById(id);
         return new Result(200, "OK", null);
     }

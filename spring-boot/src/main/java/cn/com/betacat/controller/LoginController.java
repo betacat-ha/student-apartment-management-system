@@ -8,6 +8,7 @@ import cn.com.betacat.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,9 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @PostMapping("/api/login")
     public Result login(@RequestBody User user) {
@@ -28,6 +32,11 @@ public class LoginController {
         if (loginUser == null) {
             return Result.error(403, "用户名或密码错误");
         }
+
+        // 更新最后登录时间
+        loginUser.setLastLoginTime(LocalDateTime.now());
+
+        userMapper.updateById(loginUser);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", loginUser.getId());

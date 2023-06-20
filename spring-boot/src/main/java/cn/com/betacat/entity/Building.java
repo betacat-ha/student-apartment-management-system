@@ -14,4 +14,7 @@ public class Building {
     private String name;
     @TableField(exist = false)
     private List<Apartment> apartments;
+
+    @TableField(exist = false)
+    private List<Integer> administratorId;
 }

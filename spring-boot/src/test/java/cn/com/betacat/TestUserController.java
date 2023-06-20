@@ -2,8 +2,10 @@ package cn.com.betacat;
 
 import cn.com.betacat.dao.UsageMapper;
 import cn.com.betacat.dao.UserMapper;
+import cn.com.betacat.entity.Bill;
 import cn.com.betacat.entity.Usage;
 import cn.com.betacat.entity.User;
+import cn.com.betacat.services.BillService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,6 +26,9 @@ public class TestUserController {
     @Autowired
     private UsageMapper usageMapper;
 
+    @Autowired
+    private BillService billService;
+
     @Test
     public void testGetUserList() {
         List<User> userList = userMapper.selectList(null);
@@ -34,7 +39,7 @@ public class TestUserController {
 
     @Test
     public void testGetUsageByBuildingId() {
-        List<Usage> usageList = usageMapper.getUsageByBuildingId(1);
+        List<Usage> usageList = usageMapper.selectAllUsages();
         for (Usage usage : usageList) {
             System.out.println("usage = " + usage);
         }
@@ -63,6 +68,11 @@ public class TestUserController {
                 .getBody();
 
         System.out.println(claims);
+    }
+
+    @Test
+    public void testGenerateBill() {
+        billService.generateBill(11);
     }
 
 

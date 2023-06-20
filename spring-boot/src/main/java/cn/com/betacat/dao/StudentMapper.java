@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface StudentMapper extends BaseMapper<Student> {
     @Select("select * from student where apartment_id = #{apartmentId}")
-    Student selectByApartmentId(Integer apartmentId);
+    List<Student> selectByApartmentId(Integer apartmentId);
 
 
     @Select("select * from student where id = #{id}")
