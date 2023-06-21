@@ -6,16 +6,24 @@ import cn.com.betacat.entity.Apartment;
 import cn.com.betacat.entity.Result;
 import cn.com.betacat.entity.Student;
 import cn.com.betacat.services.PermissionService;
+import cn.com.betacat.util.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin // 允许跨域
+@Slf4j
 @RestController
 public class StudentController {
     @Autowired
@@ -23,6 +31,9 @@ public class StudentController {
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private ExcelUtil<Student> excelUtil;
 
     @GetMapping("/api/student/{id}")
     public Result query(@PathVariable String id, @RequestHeader String token) {
@@ -98,5 +109,25 @@ public class StudentController {
         } else {
             return new Result(500, "系统内部错误", null);
         }
+    }
+
+    @GetMapping("/api/student/export")
+    public ResponseEntity<Resource> exportStudent(HttpServletResponse response) {
+        List<Student> studentList = studentMapper.selectList(null);
+        String filePath = excelUtil.write("学生数据", studentList, Student.class);
+        log.info("获取到生成的Excel文件：" + filePath);
+
+        // 获取文件资源
+        Resource resource = new FileSystemResource(filePath);
+
+        // 设置响应头
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filePath);
+
+        // 返回文件资源的ResponseEntity
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
     }
 }

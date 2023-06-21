@@ -1,11 +1,14 @@
 package cn.com.betacat;
 
+import cn.com.betacat.controller.StudentController;
+import cn.com.betacat.dao.StudentMapper;
 import cn.com.betacat.dao.UsageMapper;
 import cn.com.betacat.dao.UserMapper;
-import cn.com.betacat.entity.Bill;
+import cn.com.betacat.entity.Student;
 import cn.com.betacat.entity.Usage;
 import cn.com.betacat.entity.User;
 import cn.com.betacat.services.BillService;
+import cn.com.betacat.util.ExcelUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,6 +31,12 @@ public class TestUserController {
 
     @Autowired
     private BillService billService;
+
+    @Autowired
+    private ExcelUtil excelUtil;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     @Test
     public void testGetUserList() {
@@ -73,6 +82,13 @@ public class TestUserController {
     @Test
     public void testGenerateBill() {
         billService.generateBill(11);
+    }
+
+    @Test
+    public void testWriteExcel() {
+        List<Student> studentList = studentMapper.selectList(null);
+        String filePath = excelUtil.write("学生数据", studentList, Student.class);
+        System.out.println("filePath = " + filePath);
     }
 
 
