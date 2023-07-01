@@ -7,6 +7,7 @@ import cn.com.betacat.entity.Bill;
 import cn.com.betacat.entity.Price;
 import cn.com.betacat.entity.Usage;
 import cn.com.betacat.services.BillService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,7 @@ public class BillServiceImpl implements BillService {
         return true;
     }
 
+    @SneakyThrows
     @Override
     public void generateBill(Integer userId) {
         List<Usage> usageList = usageMapper.selectAllUsagesAndApartmentAndStudentsAndBill();
