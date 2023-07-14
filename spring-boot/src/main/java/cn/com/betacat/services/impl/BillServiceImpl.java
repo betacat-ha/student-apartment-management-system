@@ -16,9 +16,9 @@
 
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.BillMapper;
-import cn.com.betacat.dao.PriceMapper;
-import cn.com.betacat.dao.UsageMapper;
+import cn.com.betacat.dao.BillDao;
+import cn.com.betacat.dao.PriceDao;
+import cn.com.betacat.dao.UsageDao;
 import cn.com.betacat.pojo.Bill;
 import cn.com.betacat.pojo.Price;
 import cn.com.betacat.pojo.Usage;
@@ -39,25 +39,25 @@ import java.util.Map;
 @Service
 public class BillServiceImpl implements BillService {
     @Autowired
-    private BillMapper billMapper;
+    private BillDao billDao;
 
     @Autowired
-    private UsageMapper usageMapper;
+    private UsageDao usageDao;
 
     @Autowired
-    private PriceMapper priceMapper;
+    private PriceDao priceDao;
 
     @Override
     public List<Usage> fillBill(List<Usage> usageList) {
         for (Usage usage : usageList) {
-            usage.setBill(billMapper.selectByUsageId(usage.getId()));
+            usage.setBill(billDao.selectByUsageId(usage.getId()));
         }
         return usageList;
     }
 
     @Override
     public Boolean generateBillBy(Bill templateBill) {
-        List<Usage> usageList = usageMapper.selectList(null);
+        List<Usage> usageList = usageDao.selectList(null);
         for (Usage usage : usageList) {
             if (usage.getBill() != null) {
                 continue;
@@ -88,7 +88,7 @@ public class BillServiceImpl implements BillService {
             // 计算总价，总价 = (用量 - 补贴) * 单价
             bill.setTotal((bill.getAmount() - bill.getSubsidy()) * bill.getUnitPrice());
 
-            billMapper.insert(bill);
+            billDao.insert(bill);
         }
 
         return true;
@@ -97,8 +97,8 @@ public class BillServiceImpl implements BillService {
     @SneakyThrows
     @Override
     public void generateBill(Integer userId) {
-        List<Usage> usageList = usageMapper.selectAllUsagesAndApartmentAndStudentsAndBill();
-        List<Price> priceList = priceMapper.selectList(null);
+        List<Usage> usageList = usageDao.selectAllUsagesAndApartmentAndStudentsAndBill();
+        List<Price> priceList = priceDao.selectList(null);
         Map<String, Double> unitPrice = new HashMap<>();
         Map<String, Double> subsidy = new HashMap<>();
         Integer percent = 0;
@@ -154,7 +154,7 @@ public class BillServiceImpl implements BillService {
             double totalPrice = (bill.getAmount() - bill.getSubsidy()) * bill.getUnitPrice();
             bill.setTotal(totalPrice < 0 ? 0 : totalPrice);
 
-            billMapper.insert(bill);
+            billDao.insert(bill);
         }
         sendMessage(100, userId);
     }

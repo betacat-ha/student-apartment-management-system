@@ -16,7 +16,7 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.UserMapper;
+import cn.com.betacat.dao.UserDao;
 import cn.com.betacat.pojo.Result;
 import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.PermissionService;
@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 public class UserController {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Autowired
     private UserService userService;
@@ -54,7 +54,7 @@ public class UserController {
             return Result.reject("你没有访问该资源的权限！");
         }
 
-        List<User> list = userMapper.selectList(null);
+        List<User> list = userDao.selectList(null);
         return new Result(200, "ok", list);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
             return Result.reject("你没有访问该资源的权限！");
         }
 
-        int i = userMapper.insert(user);
+        int i = userDao.insert(user);
         if (i > 0) {
             return new Result(200, "ok", user);
         } else {
@@ -78,7 +78,7 @@ public class UserController {
             return Result.reject("你没有访问该资源的权限！");
         }
 
-        int i = userMapper.deleteById(id);
+        int i = userDao.deleteById(id);
         if (i > 0) {
             return Result.success(null);
         } else {

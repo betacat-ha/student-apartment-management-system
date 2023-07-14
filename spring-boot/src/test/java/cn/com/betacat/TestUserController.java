@@ -16,9 +16,9 @@
 
 package cn.com.betacat;
 
-import cn.com.betacat.dao.StudentMapper;
-import cn.com.betacat.dao.UsageMapper;
-import cn.com.betacat.dao.UserMapper;
+import cn.com.betacat.dao.StudentDao;
+import cn.com.betacat.dao.UsageDao;
+import cn.com.betacat.dao.UserDao;
 import cn.com.betacat.services.BillService;
 import cn.com.betacat.util.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class TestUserController {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Autowired
-    private UsageMapper usageMapper;
+    private UsageDao usageDao;
 
     @Autowired
     private BillService billService;
@@ -39,7 +39,7 @@ public class TestUserController {
     private ExcelUtil excelUtil;
 
     @Autowired
-    private StudentMapper studentMapper;
+    private StudentDao studentDao;
 
     //@Test
     //public void testGetUserList() {

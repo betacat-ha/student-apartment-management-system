@@ -16,7 +16,7 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.StudentMapper;
+import cn.com.betacat.dao.StudentDao;
 import cn.com.betacat.pojo.Result;
 import cn.com.betacat.pojo.Student;
 import cn.com.betacat.services.PermissionService;
@@ -39,7 +39,7 @@ import java.util.List;
 @RestController
 public class StudentController {
     @Autowired
-    private StudentMapper studentMapper;
+    private StudentDao studentDao;
 
     @Autowired
     private PermissionService permissionService;
@@ -49,7 +49,7 @@ public class StudentController {
 
     @GetMapping("/api/student/{id}")
     public Result query(@PathVariable String id, @RequestHeader String token) {
-        Student student = studentMapper.selectStudentAndApartmentById(id);
+        Student student = studentDao.selectStudentAndApartmentById(id);
         return new Result(200, "OK", student);
     }
 
@@ -61,7 +61,7 @@ public class StudentController {
         if (!permissionService.checkPermission(token, "STUDENT_QUERY")) {
             return Result.reject("你没有访问该资源的权限！");
         }
-        List<Student> list = studentMapper.selectList(null);
+        List<Student> list = studentDao.selectList(null);
         return new Result(200, "OK", list);
     }
 
@@ -79,7 +79,7 @@ public class StudentController {
             case "2": wrapper.eq("gender", "女"); break;
         }
 
-        List<Student> list = studentMapper.selectList(wrapper);
+        List<Student> list = studentDao.selectList(wrapper);
 
         return new Result(200, "OK", list);
     }
@@ -87,7 +87,7 @@ public class StudentController {
     @GetMapping("/api/student/page")
     public Result query(int current, int size) {
         Page<Student> page = new Page<>(current, size);
-        IPage<Student> iPage = studentMapper.selectPage(page,null);
+        IPage<Student> iPage = studentDao.selectPage(page,null);
         return new Result(200, "OK", iPage);
     }
 
@@ -103,19 +103,19 @@ public class StudentController {
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
         wrapper.eq("id", student.getId());
 
-        List<Student> list = studentMapper.selectList(wrapper);
+        List<Student> list = studentDao.selectList(wrapper);
         if (list.size() != 0) {
-            studentMapper.update(student, wrapper);
+            studentDao.update(student, wrapper);
             return new Result(200, "更新学生数据成功", null);
         }
 
-        studentMapper.insert(student);
+        studentDao.insert(student);
         return new Result(200, "添加学生数据成功", null);
     }
 
     @DeleteMapping("/api/student")
     public  Result deleteById(String id){
-        int i = studentMapper.deleteById(id);
+        int i = studentDao.deleteById(id);
         if (i > 0) {
             return new Result(200, "OK", null);
         } else {
@@ -125,7 +125,7 @@ public class StudentController {
 
     @GetMapping("/api/student/export")
     public ResponseEntity<Resource> exportStudent(HttpServletResponse response) {
-        List<Student> studentList = studentMapper.selectList(null);
+        List<Student> studentList = studentDao.selectList(null);
         String filePath = excelUtil.write("学生数据", studentList, Student.class);
         log.info("获取到生成的Excel文件：" + filePath);
 

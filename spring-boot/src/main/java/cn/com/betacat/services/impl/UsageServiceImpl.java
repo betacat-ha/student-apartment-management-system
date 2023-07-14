@@ -16,8 +16,8 @@
 
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.StudentMapper;
-import cn.com.betacat.dao.UsageMapper;
+import cn.com.betacat.dao.StudentDao;
+import cn.com.betacat.dao.UsageDao;
 import cn.com.betacat.pojo.Usage;
 import cn.com.betacat.services.UsageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +28,20 @@ import java.util.List;
 @Service
 public class UsageServiceImpl implements UsageService {
     @Autowired
-    private UsageMapper usageMapper;
+    private UsageDao usageDao;
 
     @Autowired
-    private StudentMapper studentMapper;
+    private StudentDao studentDao;
 
     public List<Usage> getUsageWithApartmentsAndBillAndStudents() {
-        List<Usage> usageList = usageMapper.selectAllUsages();
+        List<Usage> usageList = usageDao.selectAllUsages();
 
         // 为每个宿舍楼添加学生信息
         for (Usage usage : usageList) {
             if (usage.getApartment() == null) {
                 continue;
             }
-            usage.getApartment().setStudents(studentMapper.selectByApartmentId(usage.getApartment().getId()));
+            usage.getApartment().setStudents(studentDao.selectByApartmentId(usage.getApartment().getId()));
         }
 
         return usageList;

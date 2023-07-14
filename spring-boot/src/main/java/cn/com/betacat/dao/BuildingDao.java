@@ -16,11 +16,21 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.pojo.Notice;
+import cn.com.betacat.constant.DaoConstant;
+import cn.com.betacat.pojo.Building;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
-public interface NoticeMapper extends BaseMapper<Notice> {
-
+public interface BuildingDao extends BaseMapper<Building> {
+    @Select("select * from building")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "name", property = "name"),
+            @Result(column = "id", property = "apartments", javaType = List.class,
+                    many = @Many(select = DaoConstant.APARTMENT_SELECT_BY_BUILDING_ID))
+    })
+    List<Building> selectAllBuildingsAndApartments();
 }

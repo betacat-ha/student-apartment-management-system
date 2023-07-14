@@ -16,8 +16,8 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.BuildingMapper;
-import cn.com.betacat.dao.UsageMapper;
+import cn.com.betacat.dao.BuildingDao;
+import cn.com.betacat.dao.UsageDao;
 import cn.com.betacat.pojo.*;
 import cn.com.betacat.services.BillService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -34,16 +34,16 @@ import java.util.Map;
 @RestController
 public class UsageController {
     @Autowired
-    private UsageMapper usageMapper;
+    private UsageDao usageDao;
 
     @Autowired
-    private BuildingMapper buildingMapper;
+    private BuildingDao buildingDao;
 
     @Autowired
     private BillService billService;
 
     public List<Usage> outputFormat(List<Usage> list) {
-        List<Building> buildingList = buildingMapper.selectAllBuildingsAndApartments();
+        List<Building> buildingList = buildingDao.selectAllBuildingsAndApartments();
         Map<Integer,String> buildingNameMap = new HashMap<>();
         Map<Integer,String> apartmentNameMap = new HashMap<>();
 
@@ -80,7 +80,7 @@ public class UsageController {
 
     @GetMapping("/api/usage")
     public Result query() {
-        List<Usage> list = usageMapper.selectList(null);
+        List<Usage> list = usageDao.selectList(null);
         list = outputFormat(list);
         list = billService.fillBill(list);
         return new Result(200, "OK", list);
@@ -100,7 +100,7 @@ public class UsageController {
             String subQuery = "(SELECT id FROM apartment WHERE building_id = " + usage.getBuildingId() + ")";
             wrapper.inSql("apartment_id", subQuery);
         }
-        List<Usage> list = usageMapper.selectList(wrapper);
+        List<Usage> list = usageDao.selectList(wrapper);
         list = outputFormat(list);
 
         list = billService.fillBill(list);
@@ -125,7 +125,7 @@ public class UsageController {
         usage.setEndTime(LocalDateTimeFormat(usage.getEndTimeFormat()));
 
         if (usage.getId() == null || usage.getId().equals(0)) {
-            return usageMapper.insert(usage) == 1 ?
+            return usageDao.insert(usage) == 1 ?
                     new Result(200, "数据添加成功", null) :
                     new Result(500, "系统内部错误", null);
         }
@@ -133,7 +133,7 @@ public class UsageController {
         QueryWrapper<Usage> wrapper = new QueryWrapper<>();
         wrapper.eq("id", usage.getId());
 
-        return usageMapper.update(usage, wrapper) == 1 ?
+        return usageDao.update(usage, wrapper) == 1 ?
                 new Result(200, "数据修改成功", null) :
                 new Result(500, "系统内部错误", null);
     }
@@ -147,7 +147,7 @@ public class UsageController {
         QueryWrapper<Usage> wrapper = new QueryWrapper<>();
         wrapper.eq("id", id);
 
-        return usageMapper.delete(wrapper) >= 1 ?
+        return usageDao.delete(wrapper) >= 1 ?
                 new Result(200, "数据删除成功", null) :
                 new Result(500, "系统内部错误", null);
     }

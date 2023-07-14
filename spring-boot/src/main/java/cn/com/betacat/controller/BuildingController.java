@@ -16,8 +16,8 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.ApartmentMapper;
-import cn.com.betacat.dao.BuildingMapper;
+import cn.com.betacat.dao.ApartmentDao;
+import cn.com.betacat.dao.BuildingDao;
 import cn.com.betacat.pojo.Apartment;
 import cn.com.betacat.pojo.Building;
 import cn.com.betacat.pojo.Result;
@@ -34,10 +34,10 @@ import java.util.List;
 @RestController
 public class BuildingController {
     @Autowired
-    private BuildingMapper buildingMapper;
+    private BuildingDao buildingDao;
 
     @Autowired
-    private ApartmentMapper apartmentMapper;
+    private ApartmentDao apartmentDao;
 
     @Autowired
     private PermissionService permissionService;
@@ -51,7 +51,7 @@ public class BuildingController {
             return Result.reject("你没有访问该资源的权限！");
         }
 
-        List<Building> list = buildingMapper.selectAllBuildingsAndApartments();
+        List<Building> list = buildingDao.selectAllBuildingsAndApartments();
         return new Result(200, "OK", list);
     }
 
@@ -71,9 +71,9 @@ public class BuildingController {
         }
 
         if (building.getId() == null || building.getId().equals(0)) {
-            buildingMapper.insert(building);
+            buildingDao.insert(building);
         } else {
-            buildingMapper.updateById(building);
+            buildingDao.updateById(building);
         }
 
         // 分别更新每个房间数据
@@ -85,9 +85,9 @@ public class BuildingController {
             apartment.setBuildingId(building.getId());
 
             if (apartment.getId() == null || apartment.getId().equals(0)) {
-                apartmentMapper.insert(apartment);
+                apartmentDao.insert(apartment);
             } else {
-                apartmentMapper.updateById(apartment);
+                apartmentDao.updateById(apartment);
             }
         }
 
@@ -96,7 +96,7 @@ public class BuildingController {
         // 获取数据库中已有的房间
         QueryWrapper<Apartment> wrapper = new QueryWrapper<>();
         wrapper.eq("building_id", building.getId());
-        List<Apartment> existingApartments = apartmentMapper.selectList(wrapper);
+        List<Apartment> existingApartments = apartmentDao.selectList(wrapper);
 
         // 获取所有房间的id
         List<Integer> apartmentIds = new ArrayList<>();
@@ -107,7 +107,7 @@ public class BuildingController {
         // 删除多余的房间
         for (Apartment existingApartment : existingApartments) {
             if (!apartmentIds.contains(existingApartment.getId())) {
-                apartmentMapper.deleteById(existingApartment.getId());
+                apartmentDao.deleteById(existingApartment.getId());
             }
         }
 
@@ -127,7 +127,7 @@ public class BuildingController {
             return Result.reject("你没有访问该资源的权限！");
         }
 
-        buildingMapper.deleteById(id);
+        buildingDao.deleteById(id);
         return new Result(200, "OK", null);
     }
 }

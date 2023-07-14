@@ -16,6 +16,7 @@
 
 package cn.com.betacat.dao;
 
+import cn.com.betacat.constant.DaoConstant;
 import cn.com.betacat.pojo.Apartment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
@@ -23,7 +24,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface ApartmentMapper extends BaseMapper<Apartment> {
+public interface ApartmentDao extends BaseMapper<Apartment> {
 
     @Select("select * from apartment")
     @Results({
@@ -31,7 +32,7 @@ public interface ApartmentMapper extends BaseMapper<Apartment> {
             @Result(column = "building_id", property = "buildingId"),
             @Result(column = "name", property = "name"),
             @Result(column = "id", property = "students", javaType = List.class,
-                    many = @Many(select = "cn.com.betacat.dao.StudentMapper.selectByApartmentId"))
+                    many = @Many(select = DaoConstant.STUDENT_SELECT_BY_APARTMENT_ID))
     })
     List<Apartment> selectAllApartmentsAndStudents();
 
@@ -41,7 +42,7 @@ public interface ApartmentMapper extends BaseMapper<Apartment> {
             @Result(column = "building_id", property = "buildingId"),
             @Result(column = "name", property = "name"),
             @Result(column = "id", property = "students", javaType = List.class,
-                    many = @Many(select = "cn.com.betacat.dao.StudentMapper.selectByApartmentId"))
+                    many = @Many(select = DaoConstant.STUDENT_SELECT_BY_APARTMENT_ID))
     })
     List<Apartment> selectApartmentAndStudentsById(Integer apartmentId);
 

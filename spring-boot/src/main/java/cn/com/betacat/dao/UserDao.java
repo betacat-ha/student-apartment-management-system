@@ -16,17 +16,22 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.pojo.Bill;
+import cn.com.betacat.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface BillMapper extends BaseMapper<Bill> {
+public interface UserDao extends BaseMapper<User> {
 
-        /**
-        * 根据用量id查询账单
-        */
-        @Select("select * from bill where usage_id = #{usageId}")
-        Bill selectByUsageId(Integer usageId);
+    /**
+     * 根据电子邮箱查询用户
+     */
+    @Select("select * from user where email = #{email}")
+    User selectByEmail(String email);
+
+    @Select("select id, name, nickname, password, phone, email, role_id, create_time, last_login_time, status " +
+            "from user " +
+            "where email=#{email} and password =#{password}")
+    User getByEmailAndPassword(User user);
 }

@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public interface NoticeService {
     /**
      * 获取所有公告

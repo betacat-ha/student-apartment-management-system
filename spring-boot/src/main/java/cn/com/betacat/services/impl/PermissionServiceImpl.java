@@ -16,7 +16,7 @@
 
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.RoleMapper;
+import cn.com.betacat.dao.RoleDao;
 import cn.com.betacat.pojo.Role;
 import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.PermissionService;
@@ -30,7 +30,7 @@ public class PermissionServiceImpl implements PermissionService {
     private UserService userService;
 
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleDao roleDao;
 
     @Override
     public String getPermissionBy(String token) {
@@ -39,7 +39,7 @@ public class PermissionServiceImpl implements PermissionService {
             return null;
         }
 
-        Role role = roleMapper.selectById(user.getRoleId());
+        Role role = roleDao.selectById(user.getRoleId());
         if (role == null) {
             return null;
         }

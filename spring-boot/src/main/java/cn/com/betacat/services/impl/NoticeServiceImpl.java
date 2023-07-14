@@ -16,18 +16,19 @@
 
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.NoticeMapper;
+import cn.com.betacat.dao.NoticeDao;
 import cn.com.betacat.pojo.Notice;
+import cn.com.betacat.services.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class NoticeServiceImpl {
+public class NoticeServiceImpl implements NoticeService {
     @Autowired
-    private NoticeMapper noticeMapper;
+    private NoticeDao noticeDao;
     public List<Notice> getAllNotice() {
-        return noticeMapper.selectList(null);
+        return noticeDao.selectList(null);
     }
 }

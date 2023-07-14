@@ -16,7 +16,7 @@
 
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.UserMapper;
+import cn.com.betacat.dao.UserDao;
 import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.UserService;
 import cn.com.betacat.util.JwtUtils;
@@ -27,27 +27,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Override
     public User loginByEmailAndPwd(User user) {
-        return userMapper.getByEmailAndPassword(user);
+        return userDao.getByEmailAndPassword(user);
     }
 
     @Override
     public User getUserInfoBy(String token) {
         Integer id = (Integer) JwtUtils.parseJWT(token).get("id");
-        return userMapper.selectById(id);
+        return userDao.selectById(id);
     }
 
     @Override
     public Boolean updateBuildingAdminBy(Integer id, Integer buildingId) {
-        User user = userMapper.selectById(id);
+        User user = userDao.selectById(id);
         if (user == null) {
             return false;
         }
         user.setBuildingId(buildingId);
-        userMapper.updateById(user);
+        userDao.updateById(user);
         return true;
     }
 }

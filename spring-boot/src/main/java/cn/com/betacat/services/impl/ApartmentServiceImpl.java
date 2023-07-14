@@ -1,6 +1,6 @@
 package cn.com.betacat.services.impl;
 
-import cn.com.betacat.dao.ApartmentMapper;
+import cn.com.betacat.dao.ApartmentDao;
 import cn.com.betacat.pojo.Apartment;
 import cn.com.betacat.services.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
     @Autowired
-    private ApartmentMapper apartmentMapper;
+    private ApartmentDao apartmentDao;
 
     /**
      * 查询公寓信息
@@ -20,7 +20,7 @@ public class ApartmentServiceImpl implements ApartmentService {
      */
     @Override
     public List<Apartment> getApartment() {
-        return apartmentMapper.selectList(null);
+        return apartmentDao.selectList(null);
     }
 
     /**
@@ -29,6 +29,6 @@ public class ApartmentServiceImpl implements ApartmentService {
      */
     @Override
     public List<Apartment> getApartmentAndStudent() {
-        return apartmentMapper.selectAllApartmentsAndStudents();
+        return apartmentDao.selectAllApartmentsAndStudents();
     }
 }

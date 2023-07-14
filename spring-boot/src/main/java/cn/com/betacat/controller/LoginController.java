@@ -16,7 +16,7 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.UserMapper;
+import cn.com.betacat.dao.UserDao;
 import cn.com.betacat.pojo.Result;
 import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.UserService;
@@ -35,7 +35,7 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @PostMapping("/api/login")
     public Result login(@RequestBody User user) {
@@ -52,7 +52,7 @@ public class LoginController {
         // 更新最后登录时间
         loginUser.setLastLoginTime(LocalDateTime.now());
 
-        userMapper.updateById(loginUser);
+        userDao.updateById(loginUser);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", loginUser.getId());

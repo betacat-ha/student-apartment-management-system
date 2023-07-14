@@ -16,6 +16,7 @@
 
 package cn.com.betacat.dao;
 
+import cn.com.betacat.constant.DaoConstant;
 import cn.com.betacat.pojo.Apartment;
 import cn.com.betacat.pojo.Usage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -24,7 +25,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface UsageMapper extends BaseMapper<Usage> {
+public interface UsageDao extends BaseMapper<Usage> {
     @Select("select * from wae_usage")
     @Results({
             @Result(property = "id", column = "id"),
@@ -35,9 +36,9 @@ public interface UsageMapper extends BaseMapper<Usage> {
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "status", column = "status"),
             @Result(property = "apartment", column = "apartment_id", javaType = Apartment.class,
-                    one = @One(select = "cn.com.betacat.dao.ApartmentMapper.selectById")),
+                    one = @One(select = DaoConstant.APARTMENT_SELECT_BY_ID)),
             @Result(property = "bill", column = "id", javaType = cn.com.betacat.pojo.Bill.class,
-                    one = @One(select = "cn.com.betacat.dao.BillMapper.selectByUsageId"))
+                    one = @One(select = DaoConstant.BILL_SELECT_BY_USAGE_ID))
     })
     List<Usage> selectAllUsages();
 
@@ -51,9 +52,9 @@ public interface UsageMapper extends BaseMapper<Usage> {
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "status", column = "status"),
             @Result(property = "apartment", column = "apartment_id", javaType = Apartment.class,
-                    one = @One(select = "cn.com.betacat.dao.ApartmentMapper.selectApartmentAndStudentsById")),
+                    one = @One(select = DaoConstant.APARTMENT_AND_STUDENTS_SELECT_BY_ID)),
             @Result(property = "bill", column = "id", javaType = cn.com.betacat.pojo.Bill.class,
-                    one = @One(select = "cn.com.betacat.dao.BillMapper.selectByUsageId"))
+                    one = @One(select = DaoConstant.BILL_SELECT_BY_USAGE_ID))
     })
     List<Usage> selectAllUsagesAndApartmentAndStudentsAndBill();
 
