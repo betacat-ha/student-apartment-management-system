@@ -16,8 +16,8 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.entity.Apartment;
-import cn.com.betacat.entity.Student;
+import cn.com.betacat.pojo.Apartment;
+import cn.com.betacat.pojo.Student;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 

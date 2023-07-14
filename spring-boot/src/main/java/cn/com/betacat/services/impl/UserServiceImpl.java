@@ -17,7 +17,7 @@
 package cn.com.betacat.services.impl;
 
 import cn.com.betacat.dao.UserMapper;
-import cn.com.betacat.entity.User;
+import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.UserService;
 import cn.com.betacat.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;

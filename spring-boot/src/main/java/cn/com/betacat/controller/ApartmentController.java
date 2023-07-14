@@ -16,9 +16,10 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.ApartmentMapper;
-import cn.com.betacat.entity.Apartment;
-import cn.com.betacat.entity.Result;
+import cn.com.betacat.constant.MessageConstant;
+import cn.com.betacat.pojo.Apartment;
+import cn.com.betacat.pojo.Result;
+import cn.com.betacat.services.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,17 +31,17 @@ import java.util.List;
 @RestController
 public class ApartmentController {
     @Autowired
-    private ApartmentMapper apartmentMapper;
+    private ApartmentService apartmentService;
 
     @GetMapping("/api/apartment/with-students")
     public Result queryWithStudents() {
-        List<Apartment> list = apartmentMapper.selectAllApartmentsAndStudents();
-        return new Result(200, "OK", list);
+        List<Apartment> list = apartmentService.getApartmentAndStudent();
+        return new Result(200, MessageConstant.QUERY_APARTMENT_SUCCESS, list);
     }
 
     @GetMapping("/api/apartment")
     public Result query() {
-        List<Apartment> list = apartmentMapper.selectList(null);
-        return new Result(200, "OK", list);
+        List<Apartment> list = apartmentService.getApartment();
+        return new Result(200, MessageConstant.QUERY_APARTMENT_SUCCESS, list);
     }
 }

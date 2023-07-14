@@ -16,7 +16,7 @@
 
 package cn.com.betacat.exception;
 
-import cn.com.betacat.entity.Result;
+import cn.com.betacat.pojo.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

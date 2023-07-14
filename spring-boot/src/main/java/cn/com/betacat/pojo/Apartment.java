@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Role {
+public class Apartment {
     @TableId(type = IdType.AUTO)
     private Integer id;
+    private Integer buildingId;
     private String name;
-    private String status;
-    private String description;
-    private String permission;
+    @TableField(exist = false)
+    private List<Student> students;
 }

@@ -14,39 +14,45 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.alibaba.excel.annotation.*;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
-@TableName(value = "wae_usage")
-public class Usage {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-    private Integer apartmentId;
+public class Student {
+    @ExcelProperty("学号")
+    private String id;
+
     @TableField(exist = false)
-    private Integer buildingId;
-    @TableField(exist = false)
-    private String apartmentName;
-    @TableField(exist = false)
+    @JsonIgnore
+    @ExcelIgnore
     private Apartment apartment;
+
     @TableField(exist = false)
+    @ExcelProperty("楼栋号")
     private String buildingName;
-    private String type;
-    private Double amount;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+
     @TableField(exist = false)
-    private String startTimeFormat;
-    @TableField(exist = false)
-    private String endTimeFormat;
-    @TableField(exist = false)
-    private Bill bill;
+    @ExcelProperty("宿舍号")
+    private String apartmentName;
+
+    @ExcelProperty("宿舍id")
+    private Integer apartmentId;
+    @ExcelProperty("班级")
+    private String className;
+    @ExcelProperty("姓名")
+    private String name;
+    @ExcelProperty("年龄")
+    private Integer age;
+    @ExcelProperty("性别")
+    private String gender;
+    @ExcelProperty("电话")
+    private String phone;
+    @ExcelProperty("邮箱")
+    private String email;
+    @ExcelProperty("状态")
+    private String status;
 }

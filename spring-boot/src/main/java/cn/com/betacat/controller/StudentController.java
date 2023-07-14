@@ -16,11 +16,9 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.dao.ApartmentMapper;
 import cn.com.betacat.dao.StudentMapper;
-import cn.com.betacat.entity.Apartment;
-import cn.com.betacat.entity.Result;
-import cn.com.betacat.entity.Student;
+import cn.com.betacat.pojo.Result;
+import cn.com.betacat.pojo.Student;
 import cn.com.betacat.services.PermissionService;
 import cn.com.betacat.util.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -34,8 +32,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin // 允许跨域

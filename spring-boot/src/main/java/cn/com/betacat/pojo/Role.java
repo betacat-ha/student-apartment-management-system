@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
-public class Token {
-    private String token;
-    private Integer userId;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+
+@Data
+public class Role {
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+    private String name;
+    private String status;
+    private String description;
+    private String permission;
 }

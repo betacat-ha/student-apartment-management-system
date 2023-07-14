@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.services.impl;
+package cn.com.betacat.util;
 
 
 import com.alibaba.fastjson.JSON;

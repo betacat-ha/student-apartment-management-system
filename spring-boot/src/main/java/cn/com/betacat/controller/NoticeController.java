@@ -16,7 +16,7 @@
 
 package cn.com.betacat.controller;
 
-import cn.com.betacat.entity.Result;
+import cn.com.betacat.pojo.Result;
 import cn.com.betacat.services.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

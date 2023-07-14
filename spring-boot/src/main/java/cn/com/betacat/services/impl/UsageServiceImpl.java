@@ -18,8 +18,7 @@ package cn.com.betacat.services.impl;
 
 import cn.com.betacat.dao.StudentMapper;
 import cn.com.betacat.dao.UsageMapper;
-import cn.com.betacat.entity.Student;
-import cn.com.betacat.entity.Usage;
+import cn.com.betacat.pojo.Usage;
 import cn.com.betacat.services.UsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

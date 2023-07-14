@@ -17,7 +17,7 @@
 package cn.com.betacat.services;
 
 
-import cn.com.betacat.entity.Notice;
+import cn.com.betacat.pojo.Notice;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

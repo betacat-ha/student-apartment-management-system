@@ -16,7 +16,7 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.entity.User;
+import cn.com.betacat.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

@@ -16,7 +16,7 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.entity.Price;
+import cn.com.betacat.pojo.Price;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

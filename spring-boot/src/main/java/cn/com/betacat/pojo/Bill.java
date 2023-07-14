@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

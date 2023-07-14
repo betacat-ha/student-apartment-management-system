@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-
-@Data
-public class Price {
-    @TableId
-    Integer id;
-    String type;
-    Double subsidy;
-    Double unitPrice;
+public class Token {
+    private String token;
+    private Integer userId;
 }

@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.dao;
+package cn.com.betacat.pojo;
 
-import cn.com.betacat.pojo.Notice;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
-@Mapper
-public interface NoticeMapper extends BaseMapper<Notice> {
+import java.util.List;
 
+@Data
+public class Building {
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+    private String name;
+    @TableField(exist = false)
+    private List<Apartment> apartments;
+
+    @TableField(exist = false)
+    private List<Integer> administratorId;
 }

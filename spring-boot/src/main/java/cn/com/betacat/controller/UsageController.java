@@ -18,7 +18,7 @@ package cn.com.betacat.controller;
 
 import cn.com.betacat.dao.BuildingMapper;
 import cn.com.betacat.dao.UsageMapper;
-import cn.com.betacat.entity.*;
+import cn.com.betacat.pojo.*;
 import cn.com.betacat.services.BillService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

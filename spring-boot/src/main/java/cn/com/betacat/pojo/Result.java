@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 /**
  * 统一响应结果封装类
  */

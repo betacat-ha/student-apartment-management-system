@@ -17,11 +17,10 @@
 package cn.com.betacat.services.impl;
 
 import cn.com.betacat.dao.RoleMapper;
-import cn.com.betacat.entity.Role;
-import cn.com.betacat.entity.User;
+import cn.com.betacat.pojo.Role;
+import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.PermissionService;
 import cn.com.betacat.services.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

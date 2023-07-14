@@ -16,7 +16,7 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.entity.Building;
+import cn.com.betacat.pojo.Building;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 

@@ -16,7 +16,7 @@
 
 package cn.com.betacat.interceptor;
 
-import cn.com.betacat.entity.Result;
+import cn.com.betacat.pojo.Result;
 import cn.com.betacat.util.JwtUtils;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;

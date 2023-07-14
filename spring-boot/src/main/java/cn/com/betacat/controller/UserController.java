@@ -17,8 +17,8 @@
 package cn.com.betacat.controller;
 
 import cn.com.betacat.dao.UserMapper;
-import cn.com.betacat.entity.Result;
-import cn.com.betacat.entity.User;
+import cn.com.betacat.pojo.Result;
+import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.PermissionService;
 import cn.com.betacat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

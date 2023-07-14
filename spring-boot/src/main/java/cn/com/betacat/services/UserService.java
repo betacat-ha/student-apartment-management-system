@@ -16,7 +16,7 @@
 
 package cn.com.betacat.services;
 
-import cn.com.betacat.entity.User;
+import cn.com.betacat.pojo.User;
 
 public interface UserService {
     /**

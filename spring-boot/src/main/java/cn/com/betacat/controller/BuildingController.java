@@ -18,10 +18,9 @@ package cn.com.betacat.controller;
 
 import cn.com.betacat.dao.ApartmentMapper;
 import cn.com.betacat.dao.BuildingMapper;
-import cn.com.betacat.entity.Apartment;
-import cn.com.betacat.entity.Building;
-import cn.com.betacat.entity.Result;
-import cn.com.betacat.entity.Usage;
+import cn.com.betacat.pojo.Apartment;
+import cn.com.betacat.pojo.Building;
+import cn.com.betacat.pojo.Result;
 import cn.com.betacat.services.PermissionService;
 import cn.com.betacat.services.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

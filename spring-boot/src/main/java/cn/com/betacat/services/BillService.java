@@ -16,8 +16,8 @@
 
 package cn.com.betacat.services;
 
-import cn.com.betacat.entity.Bill;
-import cn.com.betacat.entity.Usage;
+import cn.com.betacat.pojo.Bill;
+import cn.com.betacat.pojo.Usage;
 
 import java.util.List;
 

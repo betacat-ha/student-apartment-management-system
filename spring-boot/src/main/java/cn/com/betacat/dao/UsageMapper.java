@@ -16,8 +16,8 @@
 
 package cn.com.betacat.dao;
 
-import cn.com.betacat.entity.Apartment;
-import cn.com.betacat.entity.Usage;
+import cn.com.betacat.pojo.Apartment;
+import cn.com.betacat.pojo.Usage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
@@ -36,7 +36,7 @@ public interface UsageMapper extends BaseMapper<Usage> {
             @Result(property = "status", column = "status"),
             @Result(property = "apartment", column = "apartment_id", javaType = Apartment.class,
                     one = @One(select = "cn.com.betacat.dao.ApartmentMapper.selectById")),
-            @Result(property = "bill", column = "id", javaType = cn.com.betacat.entity.Bill.class,
+            @Result(property = "bill", column = "id", javaType = cn.com.betacat.pojo.Bill.class,
                     one = @One(select = "cn.com.betacat.dao.BillMapper.selectByUsageId"))
     })
     List<Usage> selectAllUsages();
@@ -52,7 +52,7 @@ public interface UsageMapper extends BaseMapper<Usage> {
             @Result(property = "status", column = "status"),
             @Result(property = "apartment", column = "apartment_id", javaType = Apartment.class,
                     one = @One(select = "cn.com.betacat.dao.ApartmentMapper.selectApartmentAndStudentsById")),
-            @Result(property = "bill", column = "id", javaType = cn.com.betacat.entity.Bill.class,
+            @Result(property = "bill", column = "id", javaType = cn.com.betacat.pojo.Bill.class,
                     one = @One(select = "cn.com.betacat.dao.BillMapper.selectByUsageId"))
     })
     List<Usage> selectAllUsagesAndApartmentAndStudentsAndBill();

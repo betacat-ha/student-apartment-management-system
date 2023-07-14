@@ -17,7 +17,7 @@
 package cn.com.betacat.services.impl;
 
 import cn.com.betacat.dao.NoticeMapper;
-import cn.com.betacat.entity.Notice;
+import cn.com.betacat.pojo.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

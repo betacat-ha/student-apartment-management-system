@@ -14,21 +14,44 @@
  * limitations under the License.
  */
 
-package cn.com.betacat.entity;
+package cn.com.betacat.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
-public class Apartment {
-    @TableId(type = IdType.AUTO)
+public class Notice {
+    /**
+     * 通知标签状态
+     */
+    enum TagType {
+        DANGER("danger"), UNPUBLISHED("primary");
+
+        private String value;
+        TagType(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
     private Integer id;
-    private Integer buildingId;
-    private String name;
+    private String title;
+    private String content;
     @TableField(exist = false)
-    private List<Student> students;
+    private User author;
+    private String tag;
+    private String tagType;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
+    private String status;
 }
+
