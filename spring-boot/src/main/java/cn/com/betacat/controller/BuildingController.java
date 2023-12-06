@@ -45,7 +45,7 @@ public class BuildingController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/building")
+    @GetMapping("/building")
     public Result query(@RequestHeader String token) {
         if (!permissionService.checkPermission(token, "BUILDING_QUERY")) {
             return Result.reject("你没有访问该资源的权限！");
@@ -55,7 +55,7 @@ public class BuildingController {
         return new Result(200, "OK", list);
     }
 
-    @PostMapping("/api/building")
+    @PostMapping("/building")
     public Result update(@RequestBody Building building, @RequestHeader String token) {
         if (!permissionService.checkPermission(token, "BUILDING_UPDATE")) {
             return Result.reject("你没有访问该资源的权限！");
@@ -121,7 +121,7 @@ public class BuildingController {
                 new Result(200, "OK", null);
     }
 
-    @DeleteMapping("/api/building")
+    @DeleteMapping("/building")
     public Result delete(Integer id, @RequestHeader String token) {
         if (!permissionService.checkPermission(token, "BUILDING_UPDATE")) {
             return Result.reject("你没有访问该资源的权限！");

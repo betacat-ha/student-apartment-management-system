@@ -37,7 +37,7 @@ public class LoginController {
     @Autowired
     private UserDao userDao;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public Result login(@RequestBody User user) {
         if (user.getEmail() == null || user.getPassword() == null) {
             return Result.error(400, "用户名或密码错误");

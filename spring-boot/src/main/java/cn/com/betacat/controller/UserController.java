@@ -38,7 +38,7 @@ public class UserController {
     @Autowired
     private PermissionService permissionService;
 
-    @GetMapping("/api/user/current")
+    @GetMapping("/user/current")
     public Result queryCurrent(@RequestHeader String token) {
         User user = userService.getUserInfoBy(token);
         if (user == null) {
@@ -48,7 +48,7 @@ public class UserController {
         return Result.success(user);
     }
 
-    @GetMapping("/api/user")
+    @GetMapping("/user")
     public Result query(@RequestHeader String token) {
         if (!permissionService.checkPermission(token, "USER_QUERY")) {
             return Result.reject("你没有访问该资源的权限！");
@@ -58,7 +58,7 @@ public class UserController {
         return new Result(200, "ok", list);
     }
 
-    @PostMapping("/api/user")
+    @PostMapping("/user")
     public Result save(User user, @RequestHeader String token) {
         if (!permissionService.checkPermission(token, "USER_UPDATE")) {
             return Result.reject("你没有访问该资源的权限！");
@@ -72,7 +72,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/api/user")
+    @DeleteMapping("/user")
     public Result delete(Integer id, @RequestHeader String token) {
         if (!permissionService.checkPermission(token, "USER_UPDATE")) {
             return Result.reject("你没有访问该资源的权限！");

@@ -47,7 +47,7 @@ public class StudentController {
     @Autowired
     private ExcelUtil<Student> excelUtil;
 
-    @GetMapping("/api/student/{id}")
+    @GetMapping("/student/{id}")
     public Result query(@PathVariable String id, @RequestHeader String token) {
         Student student = studentDao.selectStudentAndApartmentById(id);
         return new Result(200, "OK", student);
@@ -56,7 +56,7 @@ public class StudentController {
     /**
      * 查询所有学生信息
      */
-    @GetMapping("/api/student")
+    @GetMapping("/student")
     public Result queryAll(@RequestHeader String token) {
         if (!permissionService.checkPermission(token, "STUDENT_QUERY")) {
             return Result.reject("你没有访问该资源的权限！");
@@ -65,7 +65,7 @@ public class StudentController {
         return new Result(200, "OK", list);
     }
 
-    @GetMapping("/api/student/search")
+    @GetMapping("/student/search")
     public Result queryBy(@RequestParam String content, @RequestParam String type, @RequestParam String gender) {
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
         switch (type) {
@@ -84,14 +84,14 @@ public class StudentController {
         return new Result(200, "OK", list);
     }
 
-    @GetMapping("/api/student/page")
+    @GetMapping("/student/page")
     public Result query(int current, int size) {
         Page<Student> page = new Page<>(current, size);
         IPage<Student> iPage = studentDao.selectPage(page,null);
         return new Result(200, "OK", iPage);
     }
 
-    @PostMapping("/api/student")
+    @PostMapping("/student")
     public Result update(@RequestBody Student student) {
         if (student.getId() == null || student.getId().isEmpty() ||
                 student.getName() == null || student.getName().isEmpty() ||
@@ -113,7 +113,7 @@ public class StudentController {
         return new Result(200, "添加学生数据成功", null);
     }
 
-    @DeleteMapping("/api/student")
+    @DeleteMapping("/student")
     public  Result deleteById(String id){
         int i = studentDao.deleteById(id);
         if (i > 0) {
@@ -123,7 +123,7 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/api/student/export")
+    @GetMapping("/student/export")
     public ResponseEntity<Resource> exportStudent(HttpServletResponse response) {
         List<Student> studentList = studentDao.selectList(null);
         String filePath = excelUtil.write("学生数据", studentList, Student.class);

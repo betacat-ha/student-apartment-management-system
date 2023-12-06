@@ -78,7 +78,7 @@ public class UsageController {
         return LocalDateTime.parse(dateTimeStr, formatter);
     }
 
-    @GetMapping("/api/usage")
+    @GetMapping("/usage")
     public Result query() {
         List<Usage> list = usageDao.selectList(null);
         list = outputFormat(list);
@@ -86,7 +86,7 @@ public class UsageController {
         return new Result(200, "OK", list);
     }
 
-    @GetMapping("/api/usage/search")
+    @GetMapping("/usage/search")
     public Result queryBy(Usage usage) {
         QueryWrapper<Usage> wrapper = new QueryWrapper<>();
 
@@ -108,7 +108,7 @@ public class UsageController {
         return new Result(200, "OK", list);
     }
 
-    @PostMapping("/api/usage")
+    @PostMapping("/usage")
     public Result update(@RequestBody Usage usage) {
         if (usage.getApartmentId() == null || usage.getApartmentId().equals(0) ||
                 usage.getType() == null ||
@@ -138,7 +138,7 @@ public class UsageController {
                 new Result(500, "系统内部错误", null);
     }
 
-    @DeleteMapping("/api/usage")
+    @DeleteMapping("/usage")
     public Result delete(Integer id) {
         if (id == null || id.equals(0)) {
             return new Result(400, "请刷新页面后再试！", null);

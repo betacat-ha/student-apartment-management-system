@@ -29,7 +29,7 @@ public class NoticeController {
     @Autowired
     private NoticeService noticeService;
 
-    @GetMapping("/api/notice/all")
+    @GetMapping("/notice/all")
     public Result getAllNotice() {
         return Result.success(noticeService.getAllNotice());
     }

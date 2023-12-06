@@ -33,13 +33,13 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-    @GetMapping("/api/apartment/with-students")
+    @GetMapping("/apartment/with-students")
     public Result queryWithStudents() {
         List<Apartment> list = apartmentService.getApartmentAndStudent();
         return new Result(200, MessageConstant.QUERY_APARTMENT_SUCCESS, list);
     }
 
-    @GetMapping("/api/apartment")
+    @GetMapping("/apartment")
     public Result query() {
         List<Apartment> list = apartmentService.getApartment();
         return new Result(200, MessageConstant.QUERY_APARTMENT_SUCCESS, list);

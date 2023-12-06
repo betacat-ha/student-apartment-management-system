@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/bill")
 public class BillController {
     @Autowired
     private BillService billService;
@@ -33,7 +33,7 @@ public class BillController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/bill/generate")
+    @GetMapping("/generate")
     public Result generateBill(@RequestHeader("token") String token) {
         User user = userService.getUserInfoBy(token);
         billService.generateBill(user.getId());
