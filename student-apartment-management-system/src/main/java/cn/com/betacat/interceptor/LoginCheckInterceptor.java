@@ -39,9 +39,16 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         String url = request.getRequestURL().toString();
         log.info("请求路径：{}", url);
 
-        //2.判断请求url中是否包含login，如果包含，说明是登录操作，放行
+        //2.判断请求url中是否包含无需登录的链接，如果包含，说明是登录操作，放行
         if(url.contains("/login")){
             return true;//结束当前方法的执行
+        }
+        // if (url.contains("/validate/Send4ResetPwd.do")) {
+        //     return true;
+        // }
+        // 放行验证码
+        if (url.contains("/captcha")) {
+            return true;
         }
         if (!request.getMethod().equals("OPTIONS")) {
 

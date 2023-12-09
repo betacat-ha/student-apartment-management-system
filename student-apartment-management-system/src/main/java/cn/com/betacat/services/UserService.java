@@ -20,11 +20,18 @@ import cn.com.betacat.pojo.User;
 
 public interface UserService {
     /**
-     * 用户登录
+     * 使用邮箱和密码获取用户信息
      * @param user 用户信息
      * @return user 用户信息
      */
-    User loginByEmailAndPwd(User user);
+    User getUserInfoByEmailAndPwd(User user);
+
+    /**
+     * 使用邮箱获取用户信息
+     * @param email 用户邮箱
+     * @return user 用户信息
+     */
+    User getUserInfoByEmail(String email);
 
     /**
      * 获取用户信息
