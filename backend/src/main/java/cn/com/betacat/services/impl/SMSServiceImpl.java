@@ -22,8 +22,10 @@ public class SMSServiceImpl implements SMSService {
         String authCode = RandomStringUtils.randomNumeric(4);
 
         // 发送短信
-        String isOk = SMSUtils.send(telephone, authCode);
+        // String isOk = SMSUtils.send(telephone, authCode);
 
+        // 测试时，不发送短信，直接输出验证码
+        String isOk = "OK";
         System.out.println("后台手机快速登录发送手机验证码: " + isOk);
 
         // 判断短信是否发送成功? 是否为OK

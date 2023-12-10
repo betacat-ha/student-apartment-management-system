@@ -37,8 +37,9 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/auth")
 @Slf4j
-public class LoginController {
+public class AuthController {
     @Autowired
     private UserService userService;
 
@@ -108,7 +109,7 @@ public class LoginController {
 
         // 验证码校验
         if (!verifyCode.equals(redisService.get(user.getPhone() + RedisMessageConstant.SENDTYPE_RESETPWD))) {
-            return Result.error(403, MessageConstant.VERIFY_CODE_ERROR);
+            return Result.error(ErrorCodeConstant.VERIFY_CODE_ERROR, MessageConstant.VERIFY_CODE_ERROR);
         }
 
         user.setPassword(newPassword);
