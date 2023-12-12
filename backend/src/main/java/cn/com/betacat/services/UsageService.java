@@ -16,5 +16,11 @@
 
 package cn.com.betacat.services;
 
+import cn.com.betacat.pojo.Usage;
+
+import java.util.List;
+
 public interface UsageService {
+    List<Usage> getUsageWithApartmentsAndBillAndStudents();
+    List<Usage> getUsageList();
 }

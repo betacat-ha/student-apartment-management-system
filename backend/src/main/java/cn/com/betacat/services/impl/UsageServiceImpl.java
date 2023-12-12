@@ -46,4 +46,8 @@ public class UsageServiceImpl implements UsageService {
 
         return usageList;
     }
+
+    public List<Usage> getUsageList() {
+        return usageDao.selectAllUsages();
+    }
 }

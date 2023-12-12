@@ -105,12 +105,16 @@ public class BillServiceImpl implements BillService {
         Integer count = 0;
         Integer total = usageList.size();
 
+        log.info("开始生成账单");
+
         for (Price p : priceList) {
             unitPrice.put(p.getType(), p.getUnitPrice());
             subsidy.put(p.getType(), p.getSubsidy());
         }
 
         for (Usage usage : usageList) {
+            // 减缓运行速度
+            Thread.sleep(100);
 
             // 计算百分比，发送报文
             count++;
