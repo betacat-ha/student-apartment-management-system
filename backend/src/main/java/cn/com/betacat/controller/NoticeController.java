@@ -21,15 +21,17 @@ import cn.com.betacat.services.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin // 允许跨域
 @RestController
+@RequestMapping("/notice")
 public class NoticeController {
     @Autowired
     private NoticeService noticeService;
 
-    @GetMapping("/notice/all")
+    @GetMapping("/all")
     public Result getAllNotice() {
         return Result.success(noticeService.getAllNotice());
     }
