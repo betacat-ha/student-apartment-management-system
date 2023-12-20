@@ -50,6 +50,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         if (url.contains("/captcha")) {
             return true;
         }
+
+        // 放行debug模式
+        // if (request.getHeader("Token").equals("debug")) {
+        //     return true;
+        // }
+
         if (!request.getMethod().equals("OPTIONS")) {
 
             //3.获取请求头中的令牌（token）

@@ -4,6 +4,7 @@ import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.teaopenapi.models.Config;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
@@ -12,14 +13,18 @@ import java.util.Map;
  */
 public class SMSUtils {
 
-    public static final String SIGN_NAME = "BetaCat"; // 签名
-    public static final String TEMPLATE_CODE = "SMS_281995086"; // 模板编号
+    @Value("${aliyun.sms.signName}")
+    public static String signName; // 签名
 
-    // 理解为阿里云的账号密码
-    // 您的AccessKey ID
-    private static String accessKeyId = "LTAI5tRv3srncLtacPiR9MgV";
-    // 您的AccessKey Secret
-    private static String accessKeySecret = "0zF4umB4ICZPVkpn4VejlwaGFfH67y";
+    @Value("${aliyun.sms.templateCode}")
+    public static String templateCode; // 模板编号
+
+    // 阿里云AccessKey ID
+    @Value("${aliyun.sms.accessKeyId}")
+    private static String accessKeyId;
+    // 阿里云AccessKey Secret
+    @Value("${aliyun.sms.accessKeySecret}")
+    private static String accessKeySecret;
 
     /**
      * 使用AK&SK初始化账号Client
@@ -77,6 +82,6 @@ public class SMSUtils {
      * @return
      */
     public static String send(String telephone, String code) {
-        return send(telephone, SIGN_NAME, TEMPLATE_CODE, code);
+        return send(telephone, signName, templateCode, code);
     }
 }
