@@ -80,6 +80,10 @@ public class Result {
         return new Result(code, msg, null);
     }
 
+    public static Result requireLogin() {
+        return new Result(401, "NOT_LOGIN", null);
+    }
+
     @Override
     public String toString() {
         return "Result{" +

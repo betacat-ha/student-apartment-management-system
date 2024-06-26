@@ -16,10 +16,14 @@
 
 package cn.com.betacat.controller;
 
+import cn.com.betacat.constant.ErrorCodeConstant;
 import cn.com.betacat.dao.StudentDao;
 import cn.com.betacat.pojo.Result;
+import cn.com.betacat.pojo.Role;
 import cn.com.betacat.pojo.Student;
+import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.PermissionService;
+import cn.com.betacat.services.StudentService;
 import cn.com.betacat.util.ExcelUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -46,6 +50,9 @@ public class StudentController {
 
     @Autowired
     private ExcelUtil<Student> excelUtil;
+
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping("/student/{id}")
     public Result query(@PathVariable String id, @RequestHeader String token) {
@@ -141,5 +148,12 @@ public class StudentController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @GetMapping("/mobile/profile")
+    public  Result getProfile(@RequestHeader String token){
+        Student student = studentService.getStudentInfoBy(token);
+
+        return Result.success(student);
     }
 }

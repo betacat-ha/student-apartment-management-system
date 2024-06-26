@@ -34,6 +34,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -114,7 +115,7 @@ public class BillServiceImpl implements BillService {
 
         for (Usage usage : usageList) {
             // 减缓运行速度
-            Thread.sleep(100);
+            Thread.sleep(new Random().nextInt(300));
 
             // 计算百分比，发送报文
             count++;

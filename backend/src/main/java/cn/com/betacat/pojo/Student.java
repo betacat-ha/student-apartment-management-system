@@ -55,4 +55,5 @@ public class Student {
     private String email;
     @ExcelProperty("状态")
     private String status;
+    private String password;
 }

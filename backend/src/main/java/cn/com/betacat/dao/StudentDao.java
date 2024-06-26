@@ -19,6 +19,7 @@ package cn.com.betacat.dao;
 import cn.com.betacat.constant.DaoConstant;
 import cn.com.betacat.pojo.Apartment;
 import cn.com.betacat.pojo.Student;
+import cn.com.betacat.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
@@ -62,5 +63,10 @@ public interface StudentDao extends BaseMapper<Student> {
                     one = @One(select = DaoConstant.APARTMENT_SELECT_BY_ID))
     })
     List<Student> selectAllStudentsAndApartment();
+
+    @Select("select id, apartment_id, class_name, name, age, gender, phone, email, status, password " +
+            "from student " +
+            "where phone=#{phone} and password =#{password}")
+    Student getByPhoneAndPassword(Student student);
 
 }

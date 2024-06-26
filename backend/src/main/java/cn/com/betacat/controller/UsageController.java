@@ -20,6 +20,7 @@ import cn.com.betacat.dao.BuildingDao;
 import cn.com.betacat.dao.UsageDao;
 import cn.com.betacat.pojo.*;
 import cn.com.betacat.services.BillService;
+import cn.com.betacat.services.StudentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,10 @@ public class UsageController {
 
     @Autowired
     private BillService billService;
+
+    @Autowired
+    private StudentService studentService;
+
 
     public List<Usage> outputFormat(List<Usage> list) {
         List<Building> buildingList = buildingDao.selectAllBuildingsAndApartments();
@@ -150,5 +155,36 @@ public class UsageController {
         return usageDao.delete(wrapper) >= 1 ?
                 new Result(200, "数据删除成功", null) :
                 new Result(500, "系统内部错误", null);
+    }
+
+    @GetMapping("/mobile/usage/{type}")
+    public Result mobileQuery(@PathVariable String type, @RequestHeader String token) {
+        Student student = studentService.getStudentInfoBy(token);
+
+        QueryWrapper<Usage> wrapper = new QueryWrapper<>();
+
+        if (student.getApartmentId() == null && student.getApartmentId().equals(0)) {
+            return Result.error("该生没有分配宿舍号！");
+        }
+        wrapper.eq("apartment_id", student.getApartmentId());
+
+        switch (type) {
+            case "water":
+                type = "水";
+                break;
+            case "electricity" :
+                type = "电";
+                break;
+            default:
+                return Result.error("非法请求");
+        }
+        wrapper.eq("type", type);
+
+        List<Usage> list = usageDao.selectList(wrapper);
+        list = outputFormat(list);
+
+        list = billService.fillBill(list);
+
+        return new Result(200, "OK", list);
     }
 }
