@@ -21,8 +21,10 @@ import cn.com.betacat.constant.MessageConstant;
 import cn.com.betacat.constant.RedisMessageConstant;
 import cn.com.betacat.dao.UserDao;
 import cn.com.betacat.pojo.Result;
+import cn.com.betacat.pojo.Student;
 import cn.com.betacat.pojo.User;
 import cn.com.betacat.services.RedisService;
+import cn.com.betacat.services.StudentService;
 import cn.com.betacat.services.UserService;
 import cn.com.betacat.util.JwtUtils;
 import com.anji.captcha.model.vo.CaptchaVO;
@@ -44,6 +46,9 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
+    private StudentService studentService;
+
+    @Autowired
     private UserDao userDao;
 
     @Autowired
@@ -51,6 +56,37 @@ public class AuthController {
 
     @Autowired
     private CaptchaService captchaService;
+
+    @PostMapping("/mobile-login")
+    public Result mobileLogin(@RequestBody() Map<String, Object> loginInfo) {
+        Student student = new Student();
+        student.setPhone((String) loginInfo.get("phone"));
+        student.setPassword((String) loginInfo.get("password"));
+
+        if (student.getPhone() == null || student.getPassword() == null) {
+            return Result.error(400, "用户名或密码错误");
+        }
+
+        Student loginStudent = studentService.getStudentInfoByPhoneAndPwd(student);
+
+        if (loginStudent == null) {
+            return Result.error(403, "用户名或密码错误");
+        }
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", loginStudent.getId());
+        claims.put("phone", loginStudent.getEmail());
+        claims.put("name", loginStudent.getName());
+
+        String token = JwtUtils.generateJwt(claims);
+
+        // 创建一个 Map 来存储生成的 token
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("token", token);
+
+        return Result.success(resultMap);
+    }
+
 
     @PostMapping("/login")
     public Result login(@RequestBody() Map<String, Object> loginInfo) {
