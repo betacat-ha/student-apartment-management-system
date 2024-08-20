@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/stu_apartment?characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+
+# 短信服务
+aliyun:
+  sms:
+    accessKeyId:
+    accessKeySecret:
+    signName: BetaCat
+    templateCode: SMS_281995086
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8088
+  servlet:
+    context-path: /api
+
+# 滑动验证码配置
+aj:
+  captcha:
+    water-mark: BetaCat
