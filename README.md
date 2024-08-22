@@ -1,5 +1,21 @@
-# 学生公寓管理系统（Java后端）
+# 学生公寓系统（Java后端）
 [![wakatime](https://wakatime.com/badge/user/dd052a23-1a65-4e6f-b05e-80bc93d8c93c/project/a79ac574-dcd4-4477-a035-20de20c62706.svg)](https://wakatime.com/badge/user/dd052a23-1a65-4e6f-b05e-80bc93d8c93c/project/a79ac574-dcd4-4477-a035-20de20c62706)
+
+基于SpringBoot、MySQL、MyBatis Plus、Redis打造的学生公寓一站式管理服务平台后端
+
+## 技术栈
+
+SpringBoot、MyBatis-Plus、Redis、MySQL
+
+短信发送：Aliyun-SMS
+
+Excel生成：Alibaba-Easyexcel
+
+## 配套项目
+
+管理员WEB前端：https://github.com/betacat-ha/student-apartment-management-web
+
+iOS端：https://github.com/betacat-ha/student-apartment-management-system-ios
 
 ## 启动项目
 
