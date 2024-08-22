@@ -11,6 +11,16 @@ SpringBoot、MyBatis-Plus、Redis、MySQL
 
 Excel生成：Alibaba-Easyexcel
 
+## 特性
+
+- [x] 用户鉴权
+- [x] 权限控制
+- [x] Excel数据导出
+- [x] Web Socket实时进度
+- [x] 阿里云短信下发
+- [x] 滑动验证码
+- [ ] Spring Security
+
 ## 配套项目
 
 管理员WEB前端：https://github.com/betacat-ha/student-apartment-management-web
